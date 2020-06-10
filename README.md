@@ -26,4 +26,4 @@ You can change the text, but please add to the /help message a Link to [@miiiiiY
 ## Developers
 - @Eisteich
 - @miiiiiYT
-- @LennartTV (maybe)
+- @LennartTV
