@@ -14,7 +14,7 @@ git clone https://github.com/miiiiiYT/telegram-bot-balena
 Than:
 1. Create a new file called token_var.py
 1. Write `token_updater="TOKEN"` in it
-1. Replace TOKEN with your token from [@BotFather](https://t.me/BotFather.
+1. Replace TOKEN with your token from [@BotFather](https://t.me/BotFather).
 1. Execute:
 ```
 cd telegram-bot-balena
