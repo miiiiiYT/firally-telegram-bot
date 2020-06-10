@@ -22,3 +22,8 @@ python3 runtime.py
 ```
 **And just send your bot /start!**
 You can change the text, but please add to the /help message a Link to [@miiiiiYT](https://t.me/miiiiiYT) or to our [Github](https://github.com/miiiiiYT/telegram-bot-balena)
+
+## Developers
+- @Eisteich
+- @miiiiiYT
+- @LennartTV (maybe)
