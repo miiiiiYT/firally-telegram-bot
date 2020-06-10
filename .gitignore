@@ -1,3 +1,4 @@
 /token_var.py
 /.env
 /.vscode
+/__pycache__

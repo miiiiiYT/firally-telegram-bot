@@ -12,6 +12,8 @@ dispatcher = updater.dispatcher
 
 tableflip = "(╯°□°）╯︵ ┻━┻"
 
+github_link = "https://github.com/miiiiiYT/telegram-bot-balena"
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
@@ -32,7 +34,7 @@ def spam(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=f)
 
 def help(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="TestBot von \x40miiiiiYT\n\nDieser Bot kann:\n\n - /start - Um den Chat zu starten.\n - /help - Zeigt diese Nachricht an.\n - /spam - Schickt dir 10 Nachrichten hintereinander.\n - /mychatid - Gibt dir deine Chat-ID zurück. In privaten Chats das gleiche wie die User-ID.\n - /try - Probiere manche Commands aus!\n - /myuserid - Gibt dir deine User-ID zurück. In privaten Chat das gleice wie die Chat-ID.\n - Du kannst auch irgendeine Nachricht schreiben(solange es kein /command ist), und der Bot wiederholt sie.\n\nViel Freude!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="TestBot von \x40miiiiiYT\n\nDieser Bot kann:\n\n - /start - Um den Chat zu starten.\n - /help - Zeigt diese Nachricht an.\n - /spam - Schickt dir 10 Nachrichten hintereinander.\n - /mychatid - Gibt dir deine Chat-ID zurück. In privaten Chats das gleiche wie die User-ID.\n - /try - Probiere manche Commands aus!\n - /myuserid - Gibt dir deine User-ID zurück. In privaten Chat das gleiche wie die Chat-ID.\n - /credit - Zeigt dir, wer dir den Bot gebracht hat!\n - Du kannst auch irgendeine Nachricht schreiben(solange es kein /command ist), und der Bot wiederholt sie.\n\nViel Freude!")
 
 def getChatId(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Deine Chat-ID ist:\n" + str(update.effective_chat.id))
@@ -48,7 +50,7 @@ def inline_caps(update, context):
     results.append(
         InlineQueryResultArticle(
             id=query.upper(),
-            title='Caps',
+            title='Schreibe die Nachricht in caps',
             input_message_content=InputTextMessageContent(query.upper())
         )
     )
@@ -66,14 +68,18 @@ def caps(update, context):
 def try_command(update, context):
     keyboard = [[KeyboardButton(text="/spam"),
                 KeyboardButton(text="/help"),
-                KeyboardButton(text="/mychatid")]]
+                KeyboardButton(text="/mychatid"),
+                KeyboardButton(text="/credit")]]
 
     reply_keyboard = ReplyKeyboardMarkup(keyboard, rezise_keyboard=True, one_time_keyboard=True)
-    update.message.reply_text('Diese Commands kannst du ausprobieren:\n\n1. /spam\n2. /help\n3. /mychatid', reply_markup=reply_keyboard)
+    update.message.reply_text('Diese Commands kannst du ausprobieren:\n\n1. /spam\n2. /help\n3. /mychatid\n4. /try', reply_markup=reply_keyboard)
 
 def getUserID(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Deine User-ID ist:\n" + str(update.effective_user.id))
-        
+
+def credit(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F1E9\U0001F1EA\n\nDieser Bot wurde entwickelt von:\n\n\x40miiiiiYT\nMoinMeister\n\nGithub:\n" + github_link + "\n\n\U0001F1EC\U0001F1E7\n\nThis bot was developed by:\n\n\x40miiiiiYT\nMoinMeister\n\nGithub:\n" + github_link)
+
 # Handler declaration
 start_handler = CommandHandler('start', start)
 echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
@@ -85,6 +91,7 @@ inline_caps_handler = InlineQueryHandler(inline_caps)
 caps_handler = CommandHandler('caps', caps)
 try_handler = CommandHandler('try', try_command)
 userId_handler = CommandHandler('myuserid', getUserID)
+credit_handler = CommandHandler('credit', credit)
 
 # Add Handlers to Updater.dispatcher
 dispatcher.add_handler(start_handler)
@@ -97,6 +104,7 @@ dispatcher.add_handler(inline_caps_handler)
 dispatcher.add_handler(caps_handler)
 dispatcher.add_handler(try_handler)
 dispatcher.add_handler(userId_handler)
+dispatcher.add_handler(credit_handler)
 
 # Start Bot
 updater.start_polling()
