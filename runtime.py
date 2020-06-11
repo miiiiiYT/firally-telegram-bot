@@ -50,7 +50,7 @@ def inline_caps(update, context):
     results.append(
         InlineQueryResultArticle(
             id=query.upper(),
-            title='Schreibe die Nachricht in caps',
+            title='Deine Nachricht in Caps: ' + str(query.upper()),
             input_message_content=InputTextMessageContent(query.upper())
         )
     )
