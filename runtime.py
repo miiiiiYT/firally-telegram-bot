@@ -81,29 +81,6 @@ def getUserID(update, context):
 def credit(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F1E9\U0001F1EA\n\nDieser Bot wurde entwickelt von:\n\n\x40miiiiiYT\nMoinMeister\nLennart\n\nGithub:\n" + github_link + "\n\n\U0001F1EC\U0001F1E7\n\nThis bot was developed by:\n\n\x40miiiiiYT\nMoinMeister\n\nGithub:\n" + github_link)
 
-def zalgo_make(update, context):
-    try:
-        text_zalgo = zalgofy(context.args)
-        context.bot.send_message(chat_id=update.effective_chat.id, text=text_zalgo)
-    except BaseException as e:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Du musst Argumente angeben! Error: {0}".format(e))
-    except:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, aber etwas ist schiefgelaufen.")
-
-def inline_zalgo(update, context):
-    query = update.inline_query.query
-    if not query:
-        return
-    results = list()
-    results.append(
-        InlineQueryResultArticle(
-            id=zalgofy(query),
-            title='Deine Nachricht in Zalgoschrift: ' + str(zalgofy(query)),
-            input_message_content=InputTextMessageContent(zalgofy(query))
-        )
-    )
-    context.bot.answer_inline_query(update.inline_query.id, results)
-
 # Handler declaration
 start_handler = CommandHandler('start', start)
 echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
@@ -116,8 +93,6 @@ caps_handler = CommandHandler('caps', caps)
 try_handler = CommandHandler('try', try_command)
 userId_handler = CommandHandler('myuserid', getUserID)
 credit_handler = CommandHandler('credit', credit)
-zalgo_handler = CommandHandler('zalgofy', zalgo_make)
-inline_zalgo_handler = InlineQueryHandler(inline_zalgo)
 
 # Add Handlers to Updater.dispatcher
 dispatcher.add_handler(start_handler)
@@ -131,8 +106,6 @@ dispatcher.add_handler(caps_handler)
 dispatcher.add_handler(try_handler)
 dispatcher.add_handler(userId_handler)
 dispatcher.add_handler(credit_handler)
-dispatcher.add_handler(zalgo_handler)
-dispatcher.add_handler(inline_zalgo_handler)
 
 # Start Bot
 updater.start_polling()
