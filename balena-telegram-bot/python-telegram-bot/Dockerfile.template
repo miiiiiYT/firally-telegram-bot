@@ -2,7 +2,7 @@ FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-python
 
 COPY ./runtime.py ./runtime/runtime.py
 
-RUN install_packages python python3 python-pip
+RUN install_packages python python-pip
 RUN pip install telegram
 
 CMD [ "/usr/bin/env python3", "./runtime/runtime.py" ]
