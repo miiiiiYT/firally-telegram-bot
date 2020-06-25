@@ -72,13 +72,13 @@ def try_command(update, context):
                 KeyboardButton(text="/credit")]]
 
     reply_keyboard = ReplyKeyboardMarkup(keyboard, rezise_keyboard=True, one_time_keyboard=True)
-    update.message.reply_text('Diese Commands kannst du ausprobieren:\n\n1. /spam\n2. /help\n3. /mychatid\n4. /try', reply_markup=reply_keyboard)
+    update.message.reply_text('Diese Commands kannst du ausprobieren:\n\n1. /spam\n2. /help\n3. /mychatid\n4. /credit', reply_markup=reply_keyboard)
 
 def getUserID(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Deine User-ID ist:\n" + str(update.effective_user.id))
 
 def credit(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F1E9\U0001F1EA\n\nDieser Bot wurde entwickelt von:\n\n\x40miiiiiYT\nMoinMeister\nLennart\n\nGithub:\n" + github_link + "\n\n\U0001F1EC\U0001F1E7\n\nThis bot was developed by:\n\n\x40miiiiiYT\nMoinMeister\n\nGithub:\n" + github_link)
+    context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F1E9\U0001F1EA\n\nDieser Bot wurde entwickelt von:\n\n\x40miiiiiYT\nMoinMeister\nLennart\n\nGithub:\n" + github_link + "\n\n\U0001F1EC\U0001F1E7\n\nThis bot was developed by:\n\n\x40miiiiiYT\nMoinMeister\nLennart\n\nGithub:\n" + github_link)
 
 # Handler declaration
 start_handler = CommandHandler('start', start)
