@@ -1,3 +1,8 @@
+![GitHub stars](https://img.shields.io/github/stars/miiiiiYT/chikara-telegram-bot) [![Updates](https://pyup.io/repos/github/miiiiiYT/chikara-telegram-bot/shield.svg)](https://pyup.io/repos/github/miiiiiYT/chikara-telegram-bot/)
+
+
+--------
+
 # chikara-telegram-bot 
 This is a bot for telegram, running on [@chikara_bot](https://t.me/chikara_bot)
  
