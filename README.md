@@ -1,4 +1,4 @@
-![GitHub stars](https://img.shields.io/github/stars/miiiiiYT/chikara-telegram-bot) [![Updates](https://pyup.io/repos/github/miiiiiYT/chikara-telegram-bot/shield.svg)](https://pyup.io/repos/github/miiiiiYT/chikara-telegram-bot/)
+![GitHub stars](https://img.shields.io/github/stars/miiiiiYT/chikara-telegram-bot) [![Updates](https://pyup.io/repos/github/miiiiiYT/chikara-telegram-bot/shield.svg)](https://pyup.io/repos/github/miiiiiYT/chikara-telegram-bot/) ![GitHub All Releases](https://img.shields.io/github/downloads/miiiiiYT/chikara-telegram-bot/total) ![GitHub repo size](https://img.shields.io/github/repo-size/miiiiiYT/chikara-telegram-bot) ![GitHub issues](https://img.shields.io/github/issues/miiiiiYT/chikara-telegram-bot) ![GitHub](https://img.shields.io/github/license/miiiiiYT/chikara-telegram-bot) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/miiiiiYT/chikara-telegram-bot) ![GitHub contributors](https://img.shields.io/github/contributors/miiiiiYT/chikara-telegram-bot) ![GitHub last commit](https://img.shields.io/github/last-commit/miiiiiYT/chikara-telegram-bot)
 
 
 --------
