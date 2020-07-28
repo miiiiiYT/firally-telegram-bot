@@ -1,6 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, InlineQueryHandler, CallbackQueryHandler, BasePersistence, PicklePersistence, DictPersistence
 from telegram import InlineQueryResultArticle, InputTextMessageContent, ReplyKeyboardMarkup, KeyboardButton
 from token_var import token_updater
+from uuid import uuid4
 import hashlib
 import logging
 
@@ -35,7 +36,7 @@ def spam(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=f)
 
 def help(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="TestBot von \x40miiiiiYT\n\nDieser Bot kann:\n\n - /start - Um den Chat zu starten.\n - /help - Zeigt diese Nachricht an.\n - /spam - Schickt dir 10 Nachrichten hintereinander.\n - /mychatid - Gibt dir deine Chat-ID zurück. In privaten Chats das gleiche wie die User-ID.\n - /try - Probiere manche Commands aus!\n - /myuserid - Gibt dir deine User-ID zurück. In privaten Chat das gleiche wie die Chat-ID.\n - /credit - Zeigt dir, wer dir den Bot gebracht hat!\n - /hash <Text> - Konvertiert den gegebenen Text mithilfe des SHA256 Algorhythmusses in einen Hash.\n - Du kannst auch irgendeine Nachricht schreiben(solange es kein /command ist), und der Bot wiederholt sie.\n\nViel Freude!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="TestBot von \x40miiiiiYT\n\nDieser Bot kann:\n\n - /start - Um den Chat zu starten.\n - /help - Zeigt diese Nachricht an.\n - /spam - Schickt dir 10 Nachrichten hintereinander.\n - /mychatid - Gibt dir deine Chat-ID zurück. In privaten Chats das gleiche wie die User-ID.\n - /try - Probiere manche Commands aus!\n - /myuserid - Gibt dir deine User-ID zurück. In privaten Chat das gleiche wie die Chat-ID.\n - /credit - Zeigt dir, wer dir den Bot gebracht hat!\n - /hash <Text> - Konvertiert den gegebenen Text mithilfe des SHA256 Algorhythmusses in einen Hash.\n - /put <Wert> - Speichert einen Wert in der Datenbank.\n - /get <UUID> - Ruft einen Wert von der Datenbank ab.\n - Du kannst auch irgendeine Nachricht schreiben(solange es kein /command ist), und der Bot wiederholt sie.\n\nViel Freude!")
 
 def getChatId(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Deine Chat-ID ist:\n" + str(update.effective_chat.id))
@@ -72,7 +73,9 @@ def try_command(update, context):
                 KeyboardButton(text="/mychatid"),
                 KeyboardButton(text="/credit"),
                 KeyboardButton(text="/getuserid"),
-                KeyboardButton(text="/hash")]]
+                KeyboardButton(text="/hash"),
+                KeyboardButton(text="/put"),
+                KeyboardButton(text="/get")]]
 
     reply_keyboard = ReplyKeyboardMarkup(keyboard, rezise_keyboard=True, one_time_keyboard=True)
     update.message.reply_text('Diese Commands kannst du ausprobieren:\n\n1. /spam\n2. /help\n3. /mychatid\n4. /credit', reply_markup=reply_keyboard)
@@ -93,6 +96,33 @@ def hash(update, context):
     except IndexError:
         context.bot.send_message(chat_id=update.effective_chat.id, text="Bitte benutze `/hash <Text>`", parse_mode="Markdown")
 
+def put(update, context):
+    key = str(uuid4())
+    try:
+        value = context.args[0]
+    except IndexError:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Bitte benutze `/put <Wert>`", parse_mode="Markdown")
+
+    context.user_data[key] = value
+
+    update.message.reply_markdown("**" + value + "**" + " wurde mit der UUID `{0}` in der Datenbank gespeichert.".format(key))
+
+def get(update, context):
+    
+    
+    try:
+        key = context.args[0]
+        value = context.user_data[key]
+        update.message.reply_markdown("Erfolg! Der Wert von `{0}` lautet:".format(key))
+        update.message.reply_text(value)
+
+    except KeyError:
+        update.message.reply_text('Wert nicht gefunden.')
+
+    except IndexError:
+        update.message.reply_markdown("Bitte benutze `/get <UUID>`")
+
+
 # Handler declaration
 start_handler = CommandHandler('start', start)
 echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
@@ -106,6 +136,8 @@ try_handler = CommandHandler('try', try_command)
 userId_handler = CommandHandler('myuserid', getUserID)
 credit_handler = CommandHandler('credit', credit)
 hash_handler = CommandHandler('hash', hash)
+put_handler = CommandHandler('put', put)
+get_handler = CommandHandler('get', get)
 
 # Add Handlers to Updater.dispatcher
 dispatcher.add_handler(start_handler)
@@ -120,6 +152,8 @@ dispatcher.add_handler(try_handler)
 dispatcher.add_handler(userId_handler)
 dispatcher.add_handler(credit_handler)
 dispatcher.add_handler(hash_handler)
+dispatcher.add_handler(put_handler)
+dispatcher.add_handler(get_handler)
 
 # Start Bot
 updater.start_polling()
