@@ -1,14 +1,14 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, InlineQueryHandler, CallbackQueryHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, InlineQueryHandler, CallbackQueryHandler, BasePersistence, PicklePersistence, DictPersistence
 from telegram import InlineQueryResultArticle, InputTextMessageContent, ReplyKeyboardMarkup, KeyboardButton
 from token_var import token_updater
 import hashlib
 import logging
 
-# TODO
-# Todo now on Trello
 
 # Var declaration
-updater = Updater(token=token_updater, use_context=True)
+persistence = PicklePersistence(filename="persistence_file")
+
+updater = Updater(token=token_updater, use_context=True, persistence=persistence)
 dispatcher = updater.dispatcher
 
 tableflip = "(╯°□°）╯︵ ┻━┻"
