@@ -1,5 +1,6 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, InlineQueryHandler, CallbackQueryHandler, BasePersistence, PicklePersistence, DictPersistence
 from telegram import InlineQueryResultArticle, InputTextMessageContent, ReplyKeyboardMarkup, KeyboardButton
+from telegram.error import BadRequest
 from token_var import token_updater
 from uuid import uuid4
 import hashlib
@@ -36,7 +37,7 @@ def spam(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=f)
 
 def help(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="TestBot von \x40miiiiiYT\n\nDieser Bot kann:\n\n - /start - Um den Chat zu starten.\n - /help - Zeigt diese Nachricht an.\n - /spam - Schickt dir 10 Nachrichten hintereinander.\n - /mychatid - Gibt dir deine Chat-ID zurück. In privaten Chats das gleiche wie die User-ID.\n - /try - Probiere manche Commands aus!\n - /myuserid - Gibt dir deine User-ID zurück. In privaten Chat das gleiche wie die Chat-ID.\n - /credit - Zeigt dir, wer dir den Bot gebracht hat!\n - /hash <Text> - Konvertiert den gegebenen Text mithilfe des SHA256 Algorhythmusses in einen Hash.\n - /put <Wert> - Speichert einen Wert in der Datenbank.\n - /get <UUID> - Ruft einen Wert von der Datenbank ab.\n - Du kannst auch irgendeine Nachricht schreiben(solange es kein /command ist), und der Bot wiederholt sie.\n\nViel Freude!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="TestBot von \x40miiiiiYT\n\nDieser Bot kann:\n\n - /start - Um den Chat zu starten.\n - /help - Zeigt diese Nachricht an.\n - /spam - Schickt dir 10 Nachrichten hintereinander.\n - /mychatid - Gibt dir deine Chat-ID zurück. In privaten Chats das gleiche wie die User-ID.\n - /try - Probiere manche Commands aus!\n - /myuserid - Gibt dir deine User-ID zurück. In privaten Chat das gleiche wie die Chat-ID.\n - /credit - Zeigt dir, wer dir den Bot gebracht hat!\n - /hash <Text> - Konvertiert den gegebenen Text mithilfe des SHA256 Algorhythmusses in einen Hash.\n - /put <Wert> - Speichert einen Wert in der Datenbank.\n - /get <UUID> - Ruft einen Wert von der Datenbank ab.\n - /uuidlist - Listet alle UUIDs in der Datenbank auf.\n - /remove <UUID> - Löscht einen Wert aus der Datenbank.\n - Du kannst auch irgendeine Nachricht schreiben(solange es kein /command ist), und der Bot wiederholt sie.\n\nViel Freude!")
 
 def getChatId(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Deine Chat-ID ist:\n" + str(update.effective_chat.id))
@@ -75,10 +76,12 @@ def try_command(update, context):
                 KeyboardButton(text="/myuserid"),
                 KeyboardButton(text="/hash"),
                 KeyboardButton(text="/put"),
-                KeyboardButton(text="/get")]]
+                KeyboardButton(text="/get"),
+                KeyboardButton(text="/uuidlist"),
+                KeyboardButton(text="/remove")]]
 
-    reply_keyboard = ReplyKeyboardMarkup(keyboard, rezise_keyboard=True, one_time_keyboard=True)
-    update.message.reply_text('Diese Commands kannst du ausprobieren:\n\n1. /spam\n2. /help\n3. /mychatid\n4. /credit\n5. /myuserid\n6. /hash\n7. /put\n8. /get', reply_markup=reply_keyboard)
+    reply_keyboard = ReplyKeyboardMarkup(keyboard, rezise_keyboard=True)
+    update.message.reply_text('Diese Commands kannst du ausprobieren:\n\n1. /spam\n2. /help\n3. /mychatid\n4. /credit\n5. /myuserid\n6. /hash\n7. /put\n8. /get\n9. /uuidlist\n10. /remove', reply_markup=reply_keyboard)
 
 def getUserID(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Deine User-ID ist:\n" + str(update.effective_user.id))
@@ -122,7 +125,27 @@ def get(update, context):
     except IndexError:
         update.message.reply_markdown("Bitte benutze `/get <UUID>`")
 
+def uuidlist(update, context):
+    try:
+        update.message.reply_markdown(list(context.user_data.keys()))
+    except BadRequest:
+        update.message.reply_text("Du hast noch nichts in der Datenbank gespeichert!")
 
+def remove(update, context):
+    try:
+        value = context.user_data[context.args[0]]
+        key = context.args[0]
+        del context.user_data[context.args[0]]
+        update.message.reply_markdown("Wert \'{0}\' mit UUID `{1}` wurde gelöscht.".format(value, key))
+    except IndexError:
+        update.message.reply_markdown("Bitte benutze `/remove <UUID>`!")
+    except KeyError:
+        update.message.reply_markdown("UUID {0} nicht gefunden.".format(context.args[0]))
+
+def clear(update, context):
+        context.user_data.clear()
+        update.message.reply_text("Datenbank geleert.")
+    
 # Handler declaration
 start_handler = CommandHandler('start', start)
 echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
@@ -138,6 +161,9 @@ credit_handler = CommandHandler('credit', credit)
 hash_handler = CommandHandler('hash', hash)
 put_handler = CommandHandler('put', put)
 get_handler = CommandHandler('get', get)
+uuidlist_handler = CommandHandler('uuidlist', uuidlist)
+remove_handler = CommandHandler('remove', remove)
+clear_handler = CommandHandler('clear', clear)
 
 # Add Handlers to Updater.dispatcher
 dispatcher.add_handler(start_handler)
@@ -154,6 +180,10 @@ dispatcher.add_handler(credit_handler)
 dispatcher.add_handler(hash_handler)
 dispatcher.add_handler(put_handler)
 dispatcher.add_handler(get_handler)
+dispatcher.add_handler(uuidlist_handler)
+dispatcher.add_handler(remove_handler)
+dispatcher.add_handler(clear_handler)
 
 # Start Bot
 updater.start_polling()
+print('Running...')
