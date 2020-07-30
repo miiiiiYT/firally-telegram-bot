@@ -5,22 +5,8 @@
 # firally-telegram-bot 
 This is a bot for telegram, running on [@firally_bot](https://t.me/firally_bot)
  
-## Using the code on your own Telegram Bot
-To use the code on your own bot, run:
-```
-git clone https://github.com/miiiiiYT/firally-telegram-bot
-```
-Then:
-1. Create a new file called token_var.py
-1. Write `token_updater="TOKEN"` in it
-1. Replace TOKEN with your token from [@BotFather](https://t.me/BotFather).
-1. Execute:
-```
-cd firally-telegram-bot
-python3 runtime.py
-```
-**And just send your bot /start!**
-You can change the text, but please add to the /help message a Link to us [developers](https://github.com/miiiiiYT/firally-telegram-bot#developers) or to our [Github](https://github.com/miiiiiYT/firally-telegram-bot), or just let the /credit command unchanged.
+## Credit
+If you plan to use the code on your on bot, credit us [developers](https://github.com/miiiiYT/firally-telegram-bot#developers) or just let the /credit command unchanged. For more details read [the license.](https://github.com/miiiiiYT/firally-telegram-bot/blob/master/LICENSE)
 
 ## Developers
 - [@Eisteich](https://github.com/Eisteich)
