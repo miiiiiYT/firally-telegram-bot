@@ -3,3 +3,4 @@
 /.vscode
 /__pycache__
 /persistence_file
+/push.bat
