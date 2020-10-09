@@ -4,3 +4,4 @@
 /__pycache__
 /persistence_file
 /launch.bat
+/persistence.pickle
