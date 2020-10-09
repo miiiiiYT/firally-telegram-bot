@@ -8,7 +8,7 @@ import logging
 
 
 # Var declaration
-persistence = PicklePersistence(filename="persistence_file")
+persistence = PicklePersistence(filename="persistence.pickle")
 
 updater = Updater(token=token_updater, use_context=True, persistence=persistence)
 dispatcher = updater.dispatcher
@@ -87,7 +87,7 @@ def getUserID(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Deine User-ID ist:\n" + str(update.effective_user.id))
 
 def credit(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F1E9\U0001F1EA\n\nDieser Bot wurde entwickelt von:\n\n\x40miiiiiYT\nMoinMeister\nLennart\n\nGithub:\n" + github_link + "\n\n\U0001F1EC\U0001F1E7\n\nThis bot was developed by:\n\n\x40miiiiiYT\nMoinMeister\nLennart\n\nGithub:\n" + github_link)
+    context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F1E9\U0001F1EA\n\nDieser Bot wurde entwickelt von:\n\n\x40miiiiiYT\n\x40Moinmeister123\nLennart\n\nGithub:\n" + github_link + "\n\n\U0001F1EC\U0001F1E7\n\nThis bot was developed by:\n\n\x40miiiiiYT\n\x40Moinmeister123\nLennart\n\nGithub:\n" + github_link)
 
 def hash(update, context):
     sha = hashlib.sha256()
