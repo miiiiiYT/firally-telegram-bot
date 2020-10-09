@@ -8,7 +8,7 @@ import logging
 
 
 # Var declaration
-persistence = PicklePersistence(filename="persistence_file")
+persistence = PicklePersistence(filename="persistence.pickle")
 
 updater = Updater(token=token_updater, use_context=True, persistence=persistence)
 dispatcher = updater.dispatcher
