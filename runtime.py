@@ -15,7 +15,7 @@ dispatcher = updater.dispatcher
 
 tableflip = "(╯°□°）╯︵ ┻━┻"
 
-github_link = "https://github.com/miiiiiYT/telegram-bot-balena"
+github_link = "https://github.com/miiiiiYT/firally-telegram-bot"
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -94,7 +94,7 @@ def hash(update, context):
     try:
         sha.update(str(context.args[0]).encode())
         context.bot.send_message(chat_id=update.effective_chat.id, text="Erfolg! Der Hash von {0} lautet:".format(context.args[0]))
-        context.bot.send_message(chat_id=update.effective_chat.id, text=str(sha.hexdigest()))
+        context.bot.send_message(chat_id=update.effective_chat.id, text="`{}`".format(str(sha.hexdigest())))
 
     except IndexError:
         context.bot.send_message(chat_id=update.effective_chat.id, text="Bitte benutze `/hash <Text>`", parse_mode="Markdown")
@@ -127,7 +127,7 @@ def get(update, context):
 
 def uuidlist(update, context):
     try:
-        update.message.reply_markdown(list(context.user_data.keys()))
+        update.message.reply_markdown("`{}`".format(list(context.user_data.keys())))
     except BadRequest:
         update.message.reply_text("Du hast noch nichts in der Datenbank gespeichert!")
 
@@ -186,4 +186,8 @@ dispatcher.add_handler(clear_handler)
 
 # Start Bot
 updater.start_polling()
+print('Getting self...')
+print('')
+print(updater.bot.getMe())
+print('')
 print('Running...')
