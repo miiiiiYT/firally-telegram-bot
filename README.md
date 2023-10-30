@@ -2,6 +2,10 @@
 
 --------
 
+# REPOSITORY ARCHIVED
+Haven't worked on this in 3 years and I don't plan on picking it up.
+And I'm definetly not proud of the code i wrote 3 years ago, so im archiving.
+
 # firally-telegram-bot 
 This is a bot for telegram, running on [@firally_bot](https://t.me/firally_bot)
  
